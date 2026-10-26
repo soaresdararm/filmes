@@ -9,7 +9,8 @@ export const buttonVariants = cva(
     variants: {
       variant: {
         default: 'rounded-md bg-accent text-white hover:bg-accent/90',
-        outline: 'rounded-md border border-white/15 bg-transparent hover:bg-white/5',
+        outline:
+          'rounded-md border border-white/15 bg-transparent hover:bg-white/5',
         ghost: 'rounded-md hover:bg-white/10',
         chip: 'rounded-full border border-white/15 bg-surface text-muted hover:text-foreground aria-pressed:border-accent aria-pressed:bg-accent/15 aria-pressed:text-foreground',
       },
@@ -26,7 +27,18 @@ export const buttonVariants = cva(
 export type ButtonProps = ComponentProps<'button'> &
   VariantProps<typeof buttonVariants> & { asChild?: boolean }
 
-export function Button({ className, variant, size, asChild = false, ...props }: ButtonProps) {
+export function Button({
+  className,
+  variant,
+  size,
+  asChild = false,
+  ...props
+}: ButtonProps) {
   const Component = asChild ? Slot : 'button'
-  return <Component className={cn(buttonVariants({ variant, size }), className)} {...props} />
+  return (
+    <Component
+      className={cn(buttonVariants({ variant, size }), className)}
+      {...props}
+    />
+  )
 }

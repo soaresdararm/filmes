@@ -1,7 +1,13 @@
 'use client'
 
 import { SORT_OPTIONS, type SortOption } from '@/features/movies'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/shared/ui/select'
 
 const SORT_LABELS: Record<SortOption, string> = {
   'popularity.desc': 'Mais populares',
@@ -17,7 +23,10 @@ type SortSelectProps = {
 
 export function SortSelect({ value, onChange }: SortSelectProps) {
   return (
-    <Select value={value} onValueChange={(next) => onChange(next as SortOption)}>
+    <Select
+      value={value}
+      onValueChange={(next) => onChange(next as SortOption)}
+    >
       <SelectTrigger aria-label="Ordenar por">
         <SelectValue />
       </SelectTrigger>

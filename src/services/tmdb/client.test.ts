@@ -31,7 +31,10 @@ describe('tmdbFetch', () => {
 
   it('ignora params undefined e remove o padrão com null', async () => {
     const requests = capture()
-    await tmdbFetch('/x', { schema, params: { language: null, page: 2, genre: undefined } })
+    await tmdbFetch('/x', {
+      schema,
+      params: { language: null, page: 2, genre: undefined },
+    })
     const url = new URL(requests[0].url)
     expect(url.searchParams.has('language')).toBe(false)
     expect(url.searchParams.get('page')).toBe('2')
@@ -45,30 +48,42 @@ describe('tmdbFetch', () => {
 
   it('404 vira TmdbError status 404', async () => {
     capture({}, { status: 404 })
-    await expect(tmdbFetch('/x', { schema })).rejects.toMatchObject({ name: 'TmdbError', status: 404 })
+    await expect(tmdbFetch('/x', { schema })).rejects.toMatchObject({
+      name: 'TmdbError',
+      status: 404,
+    })
   })
 
   it('401 vira TmdbError 401 e loga erro de configuração', async () => {
     const log = vi.spyOn(console, 'error').mockImplementation(() => {})
     capture({}, { status: 401 })
-    await expect(tmdbFetch('/x', { schema })).rejects.toMatchObject({ status: 401 })
+    await expect(tmdbFetch('/x', { schema })).rejects.toMatchObject({
+      status: 401,
+    })
     expect(String(log.mock.calls[0][0])).toMatch(/token/i)
   })
 
   it('500 vira TmdbError status 500', async () => {
     capture({}, { status: 500 })
-    await expect(tmdbFetch('/x', { schema })).rejects.toMatchObject({ status: 500 })
+    await expect(tmdbFetch('/x', { schema })).rejects.toMatchObject({
+      status: 500,
+    })
   })
 
   it('resposta fora do schema vira TmdbError 502 e é logada', async () => {
     const log = vi.spyOn(console, 'error').mockImplementation(() => {})
     capture({ ok: 'sim' })
-    await expect(tmdbFetch('/x', { schema })).rejects.toMatchObject({ status: 502 })
+    await expect(tmdbFetch('/x', { schema })).rejects.toMatchObject({
+      status: 502,
+    })
     expect(log).toHaveBeenCalled()
   })
 
   it('falha de rede vira TmdbError 0', async () => {
     server.use(http.get(`${TMDB_API_BASE}/x`, () => HttpResponse.error()))
-    await expect(tmdbFetch('/x', { schema })).rejects.toMatchObject({ name: 'TmdbError', status: 0 })
+    await expect(tmdbFetch('/x', { schema })).rejects.toMatchObject({
+      name: 'TmdbError',
+      status: 0,
+    })
   })
 })

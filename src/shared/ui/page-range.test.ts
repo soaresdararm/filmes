@@ -11,7 +11,15 @@ describe('buildPageRange', () => {
   })
 
   it('no meio usa reticências dos dois lados', () => {
-    expect(buildPageRange(10, 20)).toEqual([1, 'ellipsis', 9, 10, 11, 'ellipsis', 20])
+    expect(buildPageRange(10, 20)).toEqual([
+      1,
+      'ellipsis',
+      9,
+      10,
+      11,
+      'ellipsis',
+      20,
+    ])
   })
 
   it('perto do início mostra número em vez de reticência de 1 página', () => {

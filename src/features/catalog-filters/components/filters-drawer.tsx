@@ -4,7 +4,12 @@ import { SlidersHorizontal } from 'lucide-react'
 import type { ReactNode } from 'react'
 import { Badge } from '@/shared/ui/badge'
 import { Button } from '@/shared/ui/button'
-import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '@/shared/ui/dialog'
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from '@/shared/ui/dialog'
 import { useUiStore } from '@/store/ui-store'
 
 type FiltersDrawerProps = {

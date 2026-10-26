@@ -22,7 +22,9 @@ const genres = [{ id: 28, name: 'Ação' }]
 function renderForm(query = '') {
   search = query
   const initial = parseFilters(Object.fromEntries(new URLSearchParams(query)))
-  return render(<FiltersForm initial={initial} providers={providers} genres={genres} />)
+  return render(
+    <FiltersForm initial={initial} providers={providers} genres={genres} />,
+  )
 }
 
 describe('FiltersForm', () => {
@@ -59,7 +61,9 @@ describe('FiltersForm', () => {
 
   it('limpar filtros faz reset', async () => {
     renderForm('genre=28&rating=7')
-    await userEvent.click(screen.getByRole('button', { name: /limpar filtros/i }))
+    await userEvent.click(
+      screen.getByRole('button', { name: /limpar filtros/i }),
+    )
     expect(push).toHaveBeenCalledWith('/', { scroll: false })
   })
 

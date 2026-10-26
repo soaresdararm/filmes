@@ -1,17 +1,33 @@
 import { siteConfig } from '@/shared/config/site'
-import type { RawMovie, RawMovieDetails, RawPage, RawProvider, RawVideo } from './schemas/tmdb'
-import { MAX_PAGE, type Movie, type MovieDetails, type Paginated, type Provider } from './types'
+import type {
+  RawMovie,
+  RawMovieDetails,
+  RawPage,
+  RawProvider,
+  RawVideo,
+} from './schemas/tmdb'
+import {
+  MAX_PAGE,
+  type Movie,
+  type MovieDetails,
+  type Paginated,
+  type Provider,
+} from './types'
 
 const MAX_CAST = 20
 
 export function toMovie(raw: RawMovie): Movie {
-  const year = raw.release_date ? Number.parseInt(raw.release_date.slice(0, 4), 10) : NaN
+  const year = raw.release_date
+    ? Number.parseInt(raw.release_date.slice(0, 4), 10)
+    : NaN
   return {
     id: raw.id,
     title: raw.title,
     posterPath: raw.poster_path ?? null,
     releaseYear: Number.isNaN(year) ? null : year,
-    rating: raw.vote_count ? Math.round((raw.vote_average ?? 0) * 10) / 10 : null,
+    rating: raw.vote_count
+      ? Math.round((raw.vote_average ?? 0) * 10) / 10
+      : null,
   }
 }
 
@@ -25,12 +41,18 @@ export function toPaginated(raw: RawPage): Paginated<Movie> {
 }
 
 export function toProvider(raw: RawProvider): Provider {
-  return { id: raw.provider_id, name: raw.provider_name, logoPath: raw.logo_path ?? null }
+  return {
+    id: raw.provider_id,
+    name: raw.provider_name,
+    logoPath: raw.logo_path ?? null,
+  }
 }
 
 /** Primeiro trailer do YouTube, preferindo os oficiais. */
 export function pickTrailerKey(videos: RawVideo[]): string | null {
-  const trailers = videos.filter((v) => v.site === 'YouTube' && v.type === 'Trailer')
+  const trailers = videos.filter(
+    (v) => v.site === 'YouTube' && v.type === 'Trailer',
+  )
   return (trailers.find((v) => v.official) ?? trailers[0])?.key ?? null
 }
 

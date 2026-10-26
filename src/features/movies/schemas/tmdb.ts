@@ -26,7 +26,9 @@ export const rawProviderSchema = z.object({
   logo_path: z.string().nullish(),
 })
 
-export const rawProviderListSchema = z.object({ results: z.array(rawProviderSchema) })
+export const rawProviderListSchema = z.object({
+  results: z.array(rawProviderSchema),
+})
 
 export const rawVideoSchema = z.object({
   key: z.string(),
@@ -59,7 +61,9 @@ export const rawMovieDetailsSchema = rawMovieSchema.extend({
     ),
   }),
   videos: rawVideoListSchema,
-  'watch/providers': z.object({ results: z.record(z.string(), rawWatchRegionSchema) }),
+  'watch/providers': z.object({
+    results: z.record(z.string(), rawWatchRegionSchema),
+  }),
 })
 
 export type RawMovie = z.input<typeof rawMovieSchema>

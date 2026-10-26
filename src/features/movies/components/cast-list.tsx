@@ -15,7 +15,10 @@ export function CastList({ cast }: { cast: CastMember[] }) {
         {cast.map((member) => {
           const photo = tmdbImageUrl(member.profilePath, 'w185')
           return (
-            <li key={`${member.id}-${member.character}`} className="w-28 shrink-0 snap-start">
+            <li
+              key={`${member.id}-${member.character}`}
+              className="w-28 shrink-0 snap-start"
+            >
               <div className="relative aspect-2/3 overflow-hidden rounded-lg bg-surface">
                 {photo ? (
                   <Image
@@ -31,9 +34,13 @@ export function CastList({ cast }: { cast: CastMember[] }) {
                   </div>
                 )}
               </div>
-              <p className="mt-2 text-sm leading-tight font-medium">{member.name}</p>
+              <p className="mt-2 text-sm leading-tight font-medium">
+                {member.name}
+              </p>
               {member.character && (
-                <p className="text-xs leading-tight text-muted">{member.character}</p>
+                <p className="text-xs leading-tight text-muted">
+                  {member.character}
+                </p>
               )}
             </li>
           )

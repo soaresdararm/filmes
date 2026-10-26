@@ -65,7 +65,10 @@ export function SearchBar() {
       <form
         role="search"
         onSubmit={onSubmit}
-        className={cn('relative w-full max-w-md', !expanded && 'hidden md:block')}
+        className={cn(
+          'relative w-full max-w-md',
+          !expanded && 'hidden md:block',
+        )}
       >
         <Search
           aria-hidden

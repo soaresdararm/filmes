@@ -4,7 +4,8 @@ import nextTs from 'eslint-config-next/typescript'
 
 const featureInternals = {
   group: ['@/features/*/*', '!@/features/*/server'],
-  message: 'Importe a feature pelo index (@/features/<nome>) ou pelo entry de servidor (@/features/<nome>/server)',
+  message:
+    'Importe a feature pelo index (@/features/<nome>) ou pelo entry de servidor (@/features/<nome>/server)',
 }
 
 const eslintConfig = defineConfig([
@@ -18,7 +19,10 @@ const eslintConfig = defineConfig([
   {
     // shared/ é agnóstico de domínio: não conhece features, serviços nem stores
     files: ['src/shared/**'],
-    ignores: ['src/shared/hooks/useUserInfo*.ts', 'src/shared/**/*.test.{ts,tsx}'],
+    ignores: [
+      'src/shared/hooks/useUserInfo*.ts',
+      'src/shared/**/*.test.{ts,tsx}',
+    ],
     rules: {
       'no-restricted-imports': [
         'error',
@@ -27,14 +31,21 @@ const eslintConfig = defineConfig([
             featureInternals,
             {
               group: ['@/features/*', '@/services/*', '@/store/*'],
-              message: 'shared/ não pode depender de features, services ou store',
+              message:
+                'shared/ não pode depender de features, services ou store',
             },
           ],
         },
       ],
     },
   },
-  globalIgnores(['.next/**', 'out/**', 'build/**', 'next-env.d.ts', '.superpowers/**']),
+  globalIgnores([
+    '.next/**',
+    'out/**',
+    'build/**',
+    'next-env.d.ts',
+    '.superpowers/**',
+  ]),
 ])
 
 export default eslintConfig

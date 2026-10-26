@@ -4,12 +4,17 @@ export type PageRangeItem = number | 'ellipsis'
  * Páginas a exibir na paginação: sempre a primeira, a última e `page ± siblings`.
  * Lacunas de 2+ páginas viram 'ellipsis'; lacuna de 1 página mostra o número.
  */
-export function buildPageRange(page: number, totalPages: number, siblings = 1): PageRangeItem[] {
+export function buildPageRange(
+  page: number,
+  totalPages: number,
+  siblings = 1,
+): PageRangeItem[] {
   const total = Math.max(1, totalPages)
   const current = Math.min(Math.max(1, page), total)
 
   // poucas páginas: cabem todas no mesmo espaço que as reticências ocupariam
-  if (total <= 2 * siblings + 5) return Array.from({ length: total }, (_, i) => i + 1)
+  if (total <= 2 * siblings + 5)
+    return Array.from({ length: total }, (_, i) => i + 1)
 
   const pages = new Set<number>([1, total])
   for (let p = current - siblings; p <= current + siblings; p++) {

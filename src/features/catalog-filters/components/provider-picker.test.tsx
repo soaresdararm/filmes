@@ -10,14 +10,24 @@ const providers = [
 
 describe('ProviderPicker', () => {
   it('marca selecionados com aria-pressed', () => {
-    render(<ProviderPicker providers={providers} value={[8]} onChange={() => {}} />)
-    expect(screen.getByRole('button', { name: 'Netflix' })).toHaveAttribute('aria-pressed', 'true')
-    expect(screen.getByRole('button', { name: 'Prime Video' })).toHaveAttribute('aria-pressed', 'false')
+    render(
+      <ProviderPicker providers={providers} value={[8]} onChange={() => {}} />,
+    )
+    expect(screen.getByRole('button', { name: 'Netflix' })).toHaveAttribute(
+      'aria-pressed',
+      'true',
+    )
+    expect(screen.getByRole('button', { name: 'Prime Video' })).toHaveAttribute(
+      'aria-pressed',
+      'false',
+    )
   })
 
   it('alterna a seleção', async () => {
     const onChange = vi.fn()
-    render(<ProviderPicker providers={providers} value={[8]} onChange={onChange} />)
+    render(
+      <ProviderPicker providers={providers} value={[8]} onChange={onChange} />,
+    )
     await userEvent.click(screen.getByRole('button', { name: 'Prime Video' }))
     expect(onChange).toHaveBeenLastCalledWith([8, 119])
     await userEvent.click(screen.getByRole('button', { name: 'Netflix' }))

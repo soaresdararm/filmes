@@ -3,7 +3,13 @@ import { describe, expect, it } from 'vitest'
 import type { Movie } from '../types'
 import { MovieCard } from './movie-card'
 
-const movie: Movie = { id: 1, title: 'Duna', posterPath: '/d.jpg', releaseYear: 2021, rating: 7.5 }
+const movie: Movie = {
+  id: 1,
+  title: 'Duna',
+  posterPath: '/d.jpg',
+  releaseYear: 2021,
+  rating: 7.5,
+}
 
 describe('MovieCard', () => {
   it('mostra título, ano e nota formatada com link para detalhes', () => {

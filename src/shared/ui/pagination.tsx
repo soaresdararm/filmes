@@ -17,7 +17,10 @@ export function Pagination({ page, totalPages, hrefFor }: PaginationProps) {
   const current = Math.min(Math.max(1, page), totalPages)
 
   return (
-    <nav aria-label="Paginação" className="flex flex-wrap items-center justify-center gap-1">
+    <nav
+      aria-label="Paginação"
+      className="flex flex-wrap items-center justify-center gap-1"
+    >
       {current > 1 ? (
         <Link href={hrefFor(current - 1)} className={itemClass}>
           <ChevronLeft className="size-4" /> Anterior
@@ -34,7 +37,11 @@ export function Pagination({ page, totalPages, hrefFor }: PaginationProps) {
             …
           </span>
         ) : item === current ? (
-          <span key={item} aria-current="page" className={cn(itemClass, 'bg-accent text-white')}>
+          <span
+            key={item}
+            aria-current="page"
+            className={cn(itemClass, 'bg-accent text-white')}
+          >
             {item}
           </span>
         ) : (

@@ -6,7 +6,14 @@ export const TMDB = 'https://api.themoviedb.org/3'
 export const rawPage = (overrides: Record<string, unknown> = {}) => ({
   page: 1,
   results: [
-    { id: 1, title: 'Filme', poster_path: '/p.jpg', release_date: '2020-01-01', vote_average: 7, vote_count: 100 },
+    {
+      id: 1,
+      title: 'Filme',
+      poster_path: '/p.jpg',
+      release_date: '2020-01-01',
+      vote_average: 7,
+      vote_count: 100,
+    },
   ],
   total_pages: 1,
   total_results: 1,

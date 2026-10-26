@@ -8,6 +8,8 @@ export async function getGenres(): Promise<Genre[]> {
   'use cache'
   cacheLife({ revalidate: REVALIDATE.static })
 
-  const raw = await tmdbFetch('/genre/movie/list', { schema: rawGenreListSchema })
+  const raw = await tmdbFetch('/genre/movie/list', {
+    schema: rawGenreListSchema,
+  })
   return raw.genres
 }

@@ -15,13 +15,18 @@ export const DEFAULT_FILTERS: Filters = {
 
 const MIN_YEAR = 1900
 
-const first = (value: string | string[] | undefined) => (Array.isArray(value) ? value[0] : value)
+const first = (value: string | string[] | undefined) =>
+  Array.isArray(value) ? value[0] : value
 
 const optionalInt = z.coerce.number().int().optional().catch(undefined)
-const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max)
+const clamp = (value: number, min: number, max: number) =>
+  Math.min(Math.max(value, min), max)
 
 /** URL → filtros válidos. Nunca lança: valores inválidos voltam ao padrão ou são limitados. */
-export function parseFilters(params: RawSearchParams, now = new Date()): Filters {
+export function parseFilters(
+  params: RawSearchParams,
+  now = new Date(),
+): Filters {
   const read = (key: string) => {
     const value = first(params[key])?.trim()
     return value === '' ? undefined : value
@@ -49,9 +54,27 @@ export function parseFilters(params: RawSearchParams, now = new Date()): Filters
     ;[yearFrom, yearTo] = [yearTo, yearFrom]
   }
 
-  const rating = clamp(z.coerce.number().catch(0).parse(read('rating') ?? 0), 0, 10)
-  const sort = z.enum(SORT_OPTIONS).catch(DEFAULT_FILTERS.sort).parse(read('sort'))
-  const page = clamp(z.coerce.number().int().catch(1).parse(read('page') ?? 1), 1, MAX_PAGE)
+  const rating = clamp(
+    z.coerce
+      .number()
+      .catch(0)
+      .parse(read('rating') ?? 0),
+    0,
+    10,
+  )
+  const sort = z
+    .enum(SORT_OPTIONS)
+    .catch(DEFAULT_FILTERS.sort)
+    .parse(read('sort'))
+  const page = clamp(
+    z.coerce
+      .number()
+      .int()
+      .catch(1)
+      .parse(read('page') ?? 1),
+    1,
+    MAX_PAGE,
+  )
 
   return {
     providers,
@@ -67,9 +90,11 @@ export function parseFilters(params: RawSearchParams, now = new Date()): Filters
 /** Filtros → URL, omitindo valores padrão para manter a URL limpa. */
 export function serializeFilters(filters: Filters): URLSearchParams {
   const params = new URLSearchParams()
-  if (filters.providers.length > 0) params.set('providers', filters.providers.join(','))
+  if (filters.providers.length > 0)
+    params.set('providers', filters.providers.join(','))
   if (filters.genre !== undefined) params.set('genre', String(filters.genre))
-  if (filters.yearFrom !== undefined) params.set('yearFrom', String(filters.yearFrom))
+  if (filters.yearFrom !== undefined)
+    params.set('yearFrom', String(filters.yearFrom))
   if (filters.yearTo !== undefined) params.set('yearTo', String(filters.yearTo))
   if (filters.rating > 0) params.set('rating', String(filters.rating))
   if (filters.sort !== DEFAULT_FILTERS.sort) params.set('sort', filters.sort)

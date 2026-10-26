@@ -14,7 +14,9 @@ describe('UserSlot', () => {
   it('mostra o nome com usuário', () => {
     render(<UserSlot />)
     act(() =>
-      useUserStore.getState().setUser({ id: '1', name: 'Dara', email: 'd@x.com', avatarUrl: null }),
+      useUserStore
+        .getState()
+        .setUser({ id: '1', name: 'Dara', email: 'd@x.com', avatarUrl: null }),
     )
     expect(screen.getByText('Dara')).toBeInTheDocument()
   })

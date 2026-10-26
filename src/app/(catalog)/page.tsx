@@ -1,8 +1,17 @@
 import Link from 'next/link'
 import { Suspense } from 'react'
-import { FiltersForm, parseFilters, serializeFilters, type Filters } from '@/features/catalog-filters'
+import {
+  FiltersForm,
+  parseFilters,
+  serializeFilters,
+  type Filters,
+} from '@/features/catalog-filters'
 import { EmptyState, MovieGrid, MovieGridSkeleton } from '@/features/movies'
-import { discoverMovies, getGenres, getProviders } from '@/features/movies/server'
+import {
+  discoverMovies,
+  getGenres,
+  getProviders,
+} from '@/features/movies/server'
 import { formatCount } from '@/shared/lib/format'
 import { Button } from '@/shared/ui/button'
 import { Pagination } from '@/shared/ui/pagination'
@@ -22,7 +31,9 @@ async function CatalogResults({ filters }: { filters: Filters }) {
         description="Essa página não tem resultados para os filtros escolhidos."
         action={
           <Button asChild variant="outline">
-            <Link href={catalogHref({ ...filters, page: 1 })}>Voltar para a página 1</Link>
+            <Link href={catalogHref({ ...filters, page: 1 })}>
+              Voltar para a página 1
+            </Link>
           </Button>
         }
       />
@@ -60,12 +71,19 @@ export default async function CatalogPage({ searchParams }: PageProps<'/'>) {
   return (
     <div className="space-y-8">
       <div className="space-y-2">
-        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Disponível agora</h1>
-        <p className="text-muted">Filmes nos streamings por assinatura do Brasil.</p>
+        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
+          Disponível agora
+        </h1>
+        <p className="text-muted">
+          Filmes nos streamings por assinatura do Brasil.
+        </p>
       </div>
       <FiltersForm initial={filters} providers={providers} genres={genres} />
       {/* key força o fallback a cada mudança de filtro */}
-      <Suspense key={serializeFilters(filters).toString()} fallback={<MovieGridSkeleton />}>
+      <Suspense
+        key={serializeFilters(filters).toString()}
+        fallback={<MovieGridSkeleton />}
+      >
         <CatalogResults filters={filters} />
       </Suspense>
     </div>

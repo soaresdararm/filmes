@@ -1,7 +1,13 @@
 'use client'
 
 import type { Genre } from '@/features/movies'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/shared/ui/select'
 
 const ALL = 'all'
 
@@ -15,7 +21,9 @@ export function GenreSelect({ genres, value, onChange }: GenreSelectProps) {
   return (
     <Select
       value={value === undefined ? ALL : String(value)}
-      onValueChange={(next) => onChange(next === ALL ? undefined : Number(next))}
+      onValueChange={(next) =>
+        onChange(next === ALL ? undefined : Number(next))
+      }
     >
       <SelectTrigger aria-label="Gênero">
         <SelectValue />

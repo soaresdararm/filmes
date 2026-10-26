@@ -11,15 +11,21 @@ type ProviderPickerProps = {
   onChange: (ids: number[]) => void
 }
 
-export function ProviderPicker({ providers, value, onChange }: ProviderPickerProps) {
+export function ProviderPicker({
+  providers,
+  value,
+  onChange,
+}: ProviderPickerProps) {
   const toggle = (id: number) =>
-    onChange(value.includes(id) ? value.filter((v) => v !== id) : [...value, id])
+    onChange(
+      value.includes(id) ? value.filter((v) => v !== id) : [...value, id],
+    )
 
   return (
     <div
       role="group"
       aria-label="Streamings"
-      className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-2 [scrollbar-width:none]"
+      className="-mx-4 flex [scrollbar-width:none] gap-2 overflow-x-auto px-4 pb-2"
     >
       {providers.map((provider) => {
         const logo = tmdbImageUrl(provider.logoPath, 'w92')
@@ -34,7 +40,13 @@ export function ProviderPicker({ providers, value, onChange }: ProviderPickerPro
             className="h-10 shrink-0 pl-1.5"
           >
             {logo && (
-              <Image src={logo} alt="" width={28} height={28} className="size-7 rounded-full" />
+              <Image
+                src={logo}
+                alt=""
+                width={28}
+                height={28}
+                className="size-7 rounded-full"
+              />
             )}
             {provider.name}
           </Button>

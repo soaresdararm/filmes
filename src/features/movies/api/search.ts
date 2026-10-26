@@ -6,7 +6,10 @@ import type { Movie, Paginated } from '../types'
 import { REVALIDATE } from './revalidate'
 
 /** Busca por título em todo o TMDB (o endpoint não filtra por streaming). */
-export async function searchMovies(query: string, page: number): Promise<Paginated<Movie>> {
+export async function searchMovies(
+  query: string,
+  page: number,
+): Promise<Paginated<Movie>> {
   'use cache'
   cacheLife({ revalidate: REVALIDATE.search })
 

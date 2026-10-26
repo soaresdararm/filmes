@@ -10,7 +10,9 @@ export function WhereToWatch({ watch }: { watch: MovieDetails['watch'] }) {
         Onde assistir
       </h2>
       {watch.providers.length === 0 ? (
-        <p className="text-muted">Não disponível em streaming por assinatura no Brasil</p>
+        <p className="text-muted">
+          Não disponível em streaming por assinatura no Brasil
+        </p>
       ) : (
         <div className="flex flex-wrap items-center gap-4">
           <ul className="flex flex-wrap gap-3">

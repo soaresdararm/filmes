@@ -29,7 +29,8 @@ function yearSchema(currentYear: number) {
   return z.object({ yearFrom: year, yearTo: year })
 }
 
-const toYear = (value: string) => (value.trim() === '' ? undefined : Number(value))
+const toYear = (value: string) =>
+  value.trim() === '' ? undefined : Number(value)
 
 type FiltersFormProps = {
   initial: Filters
@@ -43,14 +44,18 @@ export function FiltersForm({ initial, providers, genres }: FiltersFormProps) {
   const yearForm = useForm<YearFormValues>({
     resolver: zodResolver(yearSchema(new Date().getFullYear())),
     // `values` resincroniza o formulário quando a URL (e portanto `initial`) muda
-    values: { yearFrom: initial.yearFrom?.toString() ?? '', yearTo: initial.yearTo?.toString() ?? '' },
+    values: {
+      yearFrom: initial.yearFrom?.toString() ?? '',
+      yearTo: initial.yearTo?.toString() ?? '',
+    },
   })
 
   const commitYears = async () => {
     if (!(await yearForm.trigger())) return
     const { yearFrom, yearTo } = yearForm.getValues()
     const next = { yearFrom: toYear(yearFrom), yearTo: toYear(yearTo) }
-    if (next.yearFrom === initial.yearFrom && next.yearTo === initial.yearTo) return
+    if (next.yearFrom === initial.yearFrom && next.yearTo === initial.yearTo)
+      return
     apply(next)
   }
 
@@ -64,7 +69,11 @@ export function FiltersForm({ initial, providers, genres }: FiltersFormProps) {
 
   const fields = (
     <>
-      <GenreSelect genres={genres} value={initial.genre} onChange={(genre) => apply({ genre })} />
+      <GenreSelect
+        genres={genres}
+        value={initial.genre}
+        onChange={(genre) => apply({ genre })}
+      />
       <form
         onSubmit={(event) => {
           event.preventDefault()
@@ -73,7 +82,11 @@ export function FiltersForm({ initial, providers, genres }: FiltersFormProps) {
       >
         <YearRange form={yearForm} onCommit={() => void commitYears()} />
       </form>
-      <RatingSlider key={initial.rating} value={initial.rating} onCommit={(rating) => apply({ rating })} />
+      <RatingSlider
+        key={initial.rating}
+        value={initial.rating}
+        onCommit={(rating) => apply({ rating })}
+      />
       <SortSelect value={initial.sort} onChange={(sort) => apply({ sort })} />
     </>
   )

@@ -1,0 +1,5 @@
+docs/
+.superpowers/
+package-lock.json
+AGENTS.md
+public/

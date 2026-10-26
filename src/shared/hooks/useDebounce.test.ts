@@ -7,9 +7,12 @@ describe('useDebounce', () => {
   afterEach(() => vi.useRealTimers())
 
   it('só atualiza após o atraso', () => {
-    const { result, rerender } = renderHook(({ value }) => useDebounce(value, 400), {
-      initialProps: { value: 'a' },
-    })
+    const { result, rerender } = renderHook(
+      ({ value }) => useDebounce(value, 400),
+      {
+        initialProps: { value: 'a' },
+      },
+    )
     rerender({ value: 'b' })
     act(() => vi.advanceTimersByTime(399))
     expect(result.current).toBe('a')

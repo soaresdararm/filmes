@@ -9,8 +9,16 @@ export const Dialog = DialogPrimitive.Root
 export const DialogTrigger = DialogPrimitive.Trigger
 export const DialogClose = DialogPrimitive.Close
 
-export function DialogTitle({ className, ...props }: ComponentProps<typeof DialogPrimitive.Title>) {
-  return <DialogPrimitive.Title className={cn('text-lg font-semibold', className)} {...props} />
+export function DialogTitle({
+  className,
+  ...props
+}: ComponentProps<typeof DialogPrimitive.Title>) {
+  return (
+    <DialogPrimitive.Title
+      className={cn('text-lg font-semibold', className)}
+      {...props}
+    />
+  )
 }
 
 export function DialogContent({

@@ -42,7 +42,9 @@ export function MovieCard({ movie }: { movie: Movie }) {
       <h3 className="mt-2 line-clamp-2 text-sm font-medium group-hover:text-accent">
         {movie.title}
       </h3>
-      {movie.releaseYear !== null && <p className="text-xs text-muted">{movie.releaseYear}</p>}
+      {movie.releaseYear !== null && (
+        <p className="text-xs text-muted">{movie.releaseYear}</p>
+      )}
     </Link>
   )
 }

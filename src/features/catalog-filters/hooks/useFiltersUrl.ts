@@ -2,7 +2,11 @@
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useMemo } from 'react'
-import { parseFilters, serializeFilters, type Filters } from '../schemas/filters'
+import {
+  parseFilters,
+  serializeFilters,
+  type Filters,
+} from '../schemas/filters'
 
 export function useFiltersUrl(): {
   filters: Filters
@@ -21,13 +25,20 @@ export function useFiltersUrl(): {
   const apply = useCallback(
     (next: Partial<Filters>) => {
       // qualquer mudança de filtro volta à página 1, a menos que a página seja o que mudou
-      const query = serializeFilters({ ...filters, page: 1, ...next }).toString()
+      const query = serializeFilters({
+        ...filters,
+        page: 1,
+        ...next,
+      }).toString()
       router.push(query ? `${pathname}?${query}` : pathname, { scroll: false })
     },
     [filters, pathname, router],
   )
 
-  const reset = useCallback(() => router.push(pathname, { scroll: false }), [pathname, router])
+  const reset = useCallback(
+    () => router.push(pathname, { scroll: false }),
+    [pathname, router],
+  )
 
   return { filters, apply, reset }
 }

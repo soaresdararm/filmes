@@ -53,13 +53,18 @@ export function MovieHero({ movie }: { movie: MovieDetails }) {
         </div>
 
         <div className="space-y-3">
-          <h1 className="text-3xl font-bold tracking-tight sm:text-5xl">{movie.title}</h1>
+          <h1 className="text-3xl font-bold tracking-tight sm:text-5xl">
+            {movie.title}
+          </h1>
           {movie.originalTitle !== movie.title && (
             <p className="text-muted italic">{movie.originalTitle}</p>
           )}
           <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-muted">
             {movie.rating !== null && (
-              <Badge variant="rating" aria-label={`Nota ${formatRating(movie.rating)}`}>
+              <Badge
+                variant="rating"
+                aria-label={`Nota ${formatRating(movie.rating)}`}
+              >
                 <Star aria-hidden className="size-3 fill-current" />
                 {formatRating(movie.rating)}
               </Badge>

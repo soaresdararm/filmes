@@ -26,7 +26,9 @@ describe('SearchBar', () => {
     render(<SearchBar />)
     type('ação & aventura')
     act(() => vi.advanceTimersByTime(400))
-    expect(push).toHaveBeenCalledWith('/search?q=a%C3%A7%C3%A3o%20%26%20aventura')
+    expect(push).toHaveBeenCalledWith(
+      '/search?q=a%C3%A7%C3%A3o%20%26%20aventura',
+    )
   })
 
   it('não navega antes do debounce', () => {

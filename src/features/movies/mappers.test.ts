@@ -46,15 +46,29 @@ describe('toMovie', () => {
 
   it('extrai o ano e arredonda a nota', () => {
     expect(
-      toMovie({ ...rawMovie, release_date: '2023-05-02', vote_average: 7.456, vote_count: 10 }),
+      toMovie({
+        ...rawMovie,
+        release_date: '2023-05-02',
+        vote_average: 7.456,
+        vote_count: 10,
+      }),
     ).toMatchObject({ releaseYear: 2023, rating: 7.5 })
   })
 })
 
 describe('toPaginated', () => {
   it('limita totalPages a 500', () => {
-    const page = toPaginated({ page: 1, results: [rawMovie], total_pages: 9000, total_results: 180000 })
-    expect(page).toMatchObject({ page: 1, totalPages: 500, totalResults: 180000 })
+    const page = toPaginated({
+      page: 1,
+      results: [rawMovie],
+      total_pages: 9000,
+      total_results: 180000,
+    })
+    expect(page).toMatchObject({
+      page: 1,
+      totalPages: 500,
+      totalResults: 180000,
+    })
     expect(page.results).toHaveLength(1)
   })
 })
@@ -62,7 +76,9 @@ describe('toPaginated', () => {
 describe('toMovieDetails', () => {
   it('sem BR, onde assistir fica vazio', () => {
     const details = toMovieDetails(
-      rawDetails({ 'watch/providers': { results: { US: { link: 'x', flatrate: [] } } } }),
+      rawDetails({
+        'watch/providers': { results: { US: { link: 'x', flatrate: [] } } },
+      }),
     )
     expect(details.watch).toEqual({ link: null, providers: [] })
   })
@@ -70,10 +86,16 @@ describe('toMovieDetails', () => {
   it('usa flatrate do BR e ignora aluguel', () => {
     const br = {
       link: 'https://www.themoviedb.org/movie/1/watch?locale=BR',
-      flatrate: [{ provider_id: 8, provider_name: 'Netflix', logo_path: '/n.png' }],
-      rent: [{ provider_id: 2, provider_name: 'Apple TV', logo_path: '/a.png' }],
+      flatrate: [
+        { provider_id: 8, provider_name: 'Netflix', logo_path: '/n.png' },
+      ],
+      rent: [
+        { provider_id: 2, provider_name: 'Apple TV', logo_path: '/a.png' },
+      ],
     }
-    const details = toMovieDetails(rawDetails({ 'watch/providers': { results: { BR: br } } }))
+    const details = toMovieDetails(
+      rawDetails({ 'watch/providers': { results: { BR: br } } }),
+    )
     expect(details.watch).toEqual({
       link: 'https://www.themoviedb.org/movie/1/watch?locale=BR',
       providers: [{ id: 8, name: 'Netflix', logoPath: '/n.png' }],
@@ -87,7 +109,9 @@ describe('toMovieDetails', () => {
       character: 'Papel',
       profile_path: null,
     }))
-    expect(toMovieDetails(rawDetails({ credits: { cast } })).cast).toHaveLength(20)
+    expect(toMovieDetails(rawDetails({ credits: { cast } })).cast).toHaveLength(
+      20,
+    )
   })
 
   it('sinopse vazia vira null', () => {
@@ -98,7 +122,11 @@ describe('toMovieDetails', () => {
 describe('pickTrailerKey', () => {
   it('prioriza trailer oficial do YouTube', () => {
     expect(
-      pickTrailerKey([video('t', 'Teaser', true), video('n', 'Trailer', false), video('o', 'Trailer', true)]),
+      pickTrailerKey([
+        video('t', 'Teaser', true),
+        video('n', 'Trailer', false),
+        video('o', 'Trailer', true),
+      ]),
     ).toBe('o')
   })
 
@@ -107,6 +135,10 @@ describe('pickTrailerKey', () => {
   })
 
   it('ignora outros sites e retorna null sem trailer', () => {
-    expect(pickTrailerKey([{ key: 'v', site: 'Vimeo', type: 'Trailer', official: true }])).toBeNull()
+    expect(
+      pickTrailerKey([
+        { key: 'v', site: 'Vimeo', type: 'Trailer', official: true },
+      ]),
+    ).toBeNull()
   })
 })

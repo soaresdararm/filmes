@@ -31,7 +31,9 @@ describe('formatRuntime', () => {
 describe('MovieHero', () => {
   it('mostra título, título original, ano, duração, gêneros e nota', () => {
     render(<MovieHero movie={movie} />)
-    expect(screen.getByRole('heading', { level: 1, name: 'Duna' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { level: 1, name: 'Duna' }),
+    ).toBeInTheDocument()
     expect(screen.getByText('Dune')).toBeInTheDocument()
     expect(screen.getByText('2021')).toBeInTheDocument()
     expect(screen.getByText('2h 35min')).toBeInTheDocument()
@@ -45,7 +47,17 @@ describe('MovieHero', () => {
   })
 
   it('sem backdrop nem pôster renderiza placeholders', () => {
-    render(<MovieHero movie={{ ...movie, posterPath: null, backdropPath: null, rating: null, runtime: null }} />)
+    render(
+      <MovieHero
+        movie={{
+          ...movie,
+          posterPath: null,
+          backdropPath: null,
+          rating: null,
+          runtime: null,
+        }}
+      />,
+    )
     expect(screen.queryByRole('img')).toBeNull()
     expect(screen.getByText('Sem pôster')).toBeInTheDocument()
     expect(screen.queryByLabelText(/nota/i)).toBeNull()

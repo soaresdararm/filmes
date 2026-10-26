@@ -6,7 +6,10 @@ describe('parseMovieId', () => {
     expect(parseMovieId('550')).toBe(550)
   })
 
-  it.each(['abc', '0', '-3', '1.5', '', '12abc', ' 5'])('rejeita %j', (value) => {
-    expect(parseMovieId(value)).toBeNull()
-  })
+  it.each(['abc', '0', '-3', '1.5', '', '12abc', ' 5'])(
+    'rejeita %j',
+    (value) => {
+      expect(parseMovieId(value)).toBeNull()
+    },
+  )
 })

@@ -3,7 +3,11 @@ import { movieGridClass } from './movie-grid'
 
 export function MovieGridSkeleton({ count = 12 }: { count?: number }) {
   return (
-    <div role="status" aria-label="Carregando filmes" className={movieGridClass}>
+    <div
+      role="status"
+      aria-label="Carregando filmes"
+      className={movieGridClass}
+    >
       {Array.from({ length: count }, (_, i) => (
         <div key={i}>
           <Skeleton className="aspect-2/3 w-full rounded-lg" />

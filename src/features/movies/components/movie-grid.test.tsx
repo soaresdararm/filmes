@@ -7,8 +7,20 @@ describe('MovieGrid', () => {
     render(
       <MovieGrid
         movies={[
-          { id: 1, title: 'A', posterPath: null, releaseYear: null, rating: null },
-          { id: 2, title: 'B', posterPath: null, releaseYear: null, rating: null },
+          {
+            id: 1,
+            title: 'A',
+            posterPath: null,
+            releaseYear: null,
+            rating: null,
+          },
+          {
+            id: 2,
+            title: 'B',
+            posterPath: null,
+            releaseYear: null,
+            rating: null,
+          },
         ]}
         empty={<p>vazio</p>}
       />,

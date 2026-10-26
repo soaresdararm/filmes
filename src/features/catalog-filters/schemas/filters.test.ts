@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest'
-import { DEFAULT_FILTERS, parseFilters, serializeFilters, type Filters } from './filters'
+import {
+  DEFAULT_FILTERS,
+  parseFilters,
+  serializeFilters,
+  type Filters,
+} from './filters'
 
 const now = new Date('2026-10-26T12:00:00Z')
 
@@ -9,18 +14,24 @@ describe('parseFilters', () => {
   })
 
   it('descarta provedores fora da lista curada, inválidos e duplicados', () => {
-    expect(parseFilters({ providers: '8,999,abc,8' }, now).providers).toEqual([8])
+    expect(parseFilters({ providers: '8,999,abc,8' }, now).providers).toEqual([
+      8,
+    ])
   })
 
   it('limita anos ao intervalo 1900–ano atual', () => {
-    expect(parseFilters({ yearFrom: '1800', yearTo: '2030' }, now)).toMatchObject({
+    expect(
+      parseFilters({ yearFrom: '1800', yearTo: '2030' }, now),
+    ).toMatchObject({
       yearFrom: 1900,
       yearTo: 2026,
     })
   })
 
   it('troca anos invertidos', () => {
-    expect(parseFilters({ yearFrom: '2010', yearTo: '2000' }, now)).toMatchObject({
+    expect(
+      parseFilters({ yearFrom: '2010', yearTo: '2000' }, now),
+    ).toMatchObject({
       yearFrom: 2000,
       yearTo: 2010,
     })

@@ -14,7 +14,10 @@ describe('WhereToWatch', () => {
     )
     expect(screen.getByRole('img', { name: 'Netflix' })).toBeInTheDocument()
     const link = screen.getByRole('link', { name: /ver no justwatch/i })
-    expect(link).toHaveAttribute('href', 'https://www.themoviedb.org/movie/1/watch?locale=BR')
+    expect(link).toHaveAttribute(
+      'href',
+      'https://www.themoviedb.org/movie/1/watch?locale=BR',
+    )
     expect(link).toHaveAttribute('rel', 'noopener noreferrer')
   })
 

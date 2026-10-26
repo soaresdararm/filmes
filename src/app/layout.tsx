@@ -24,7 +24,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
-    <html lang="pt-BR" className={`${geistSans.variable} ${geistMono.variable} h-full`}>
+    <html
+      lang="pt-BR"
+      className={`${geistSans.variable} ${geistMono.variable} h-full`}
+    >
       <body className="flex min-h-full flex-col font-sans">
         <Header
           search={
@@ -34,7 +37,9 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
             </Suspense>
           }
         />
-        <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-8">{children}</main>
+        <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-8">
+          {children}
+        </main>
         <Footer />
       </body>
     </html>

@@ -3,12 +3,20 @@ import { mockTmdbGet } from '@/test/fixtures/tmdb'
 import { getGenres } from './genres'
 import { getProviders } from './providers'
 
-const provider = (id: number, name: string) => ({ provider_id: id, provider_name: name, logo_path: `/${id}.png` })
+const provider = (id: number, name: string) => ({
+  provider_id: id,
+  provider_name: name,
+  logo_path: `/${id}.png`,
+})
 
 describe('getProviders', () => {
   it('mantém só os curados, na ordem curada, e ignora IDs ausentes', async () => {
     const requests = mockTmdbGet('/watch/providers/movie', {
-      results: [provider(337, 'Disney Plus'), provider(8, 'Netflix'), provider(999, 'Outro')],
+      results: [
+        provider(337, 'Disney Plus'),
+        provider(8, 'Netflix'),
+        provider(999, 'Outro'),
+      ],
     })
     const providers = await getProviders()
     expect(requests[0].searchParams.get('watch_region')).toBe('BR')

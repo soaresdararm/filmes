@@ -3,7 +3,12 @@ import { afterEach, describe, expect, it } from 'vitest'
 import { useUserStore, type User } from '@/store/user-store'
 import { useUserInfo } from './useUserInfo'
 
-const user: User = { id: '1', name: 'Dara', email: 'dara@example.com', avatarUrl: null }
+const user: User = {
+  id: '1',
+  name: 'Dara',
+  email: 'dara@example.com',
+  avatarUrl: null,
+}
 
 describe('useUserInfo', () => {
   afterEach(() => useUserStore.setState({ user: null }))

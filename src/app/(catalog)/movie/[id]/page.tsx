@@ -1,7 +1,13 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { cache } from 'react'
-import { CastList, MovieHero, parseMovieId, Trailer, WhereToWatch } from '@/features/movies'
+import {
+  CastList,
+  MovieHero,
+  parseMovieId,
+  Trailer,
+  WhereToWatch,
+} from '@/features/movies'
 import { getMovieDetails } from '@/features/movies/server'
 import { isTmdbError } from '@/services/tmdb/errors'
 import { tmdbImageUrl } from '@/services/tmdb/images'
@@ -19,12 +25,16 @@ const loadMovie = cache(async (param: string) => {
   }
 })
 
-export async function generateMetadata({ params }: PageProps<'/movie/[id]'>): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps<'/movie/[id]'>): Promise<Metadata> {
   const movie = await loadMovie((await params).id)
   const backdrop = tmdbImageUrl(movie.backdropPath, 'w1280')
 
   return {
-    title: movie.releaseYear ? `${movie.title} (${movie.releaseYear})` : movie.title,
+    title: movie.releaseYear
+      ? `${movie.title} (${movie.releaseYear})`
+      : movie.title,
     description: movie.overview ?? siteConfig.description,
     openGraph: backdrop ? { images: [backdrop] } : undefined,
   }

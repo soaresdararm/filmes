@@ -8,7 +8,9 @@ export default defineConfig({
   resolve: {
     alias: {
       // o pacote server-only lança erro fora do bundle de servidor do Next
-      'server-only': fileURLToPath(new URL('./src/test/empty.ts', import.meta.url)),
+      'server-only': fileURLToPath(
+        new URL('./src/test/empty.ts', import.meta.url),
+      ),
     },
   },
   test: {
