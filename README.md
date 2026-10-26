@@ -4,6 +4,14 @@ Catálogo dos filmes disponíveis **agora** nos streamings por assinatura do Bra
 
 Projeto de portfólio, organizado para servir de base para outros projetos.
 
+## Telas
+
+![Destaque da página inicial com o filme nº 1 em popularidade](docs/screenshots/destaque.png)
+
+![Top 10 nos streamings hoje e lançamentos](docs/screenshots/top10-lancamentos.png)
+
+![Top 10 mais bem avaliados](docs/screenshots/mais-bem-avaliados.png)
+
 ## Stack
 
 - **Next.js 16** (App Router, Cache Components) + **TypeScript** strict
