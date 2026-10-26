@@ -18,7 +18,7 @@ const eslintConfig = defineConfig([
   {
     // shared/ é agnóstico de domínio: não conhece features, serviços nem stores
     files: ['src/shared/**'],
-    ignores: ['src/shared/hooks/useUserInfo*.ts'],
+    ignores: ['src/shared/hooks/useUserInfo*.ts', 'src/shared/**/*.test.{ts,tsx}'],
     rules: {
       'no-restricted-imports': [
         'error',
