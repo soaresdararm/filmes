@@ -3,8 +3,8 @@ import nextVitals from 'eslint-config-next/core-web-vitals'
 import nextTs from 'eslint-config-next/typescript'
 
 const featureInternals = {
-  group: ['@/features/*/*'],
-  message: 'Importe a feature pelo index: @/features/<nome>',
+  group: ['@/features/*/*', '!@/features/*/server'],
+  message: 'Importe a feature pelo index (@/features/<nome>) ou pelo entry de servidor (@/features/<nome>/server)',
 }
 
 const eslintConfig = defineConfig([
