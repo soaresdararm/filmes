@@ -1,5 +1,10 @@
-import { MovieGridSkeleton } from '@/features/movies'
+import { HeroSkeleton, MovieRowSkeleton } from '@/features/movies'
 
 export default function Loading() {
-  return <MovieGridSkeleton />
+  return (
+    <div className="space-y-8">
+      <HeroSkeleton />
+      <MovieRowSkeleton />
+    </div>
+  )
 }

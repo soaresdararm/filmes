@@ -10,3 +10,10 @@ export const siteConfig = {
 export const CURATED_PROVIDER_IDS: readonly number[] = [
   8, 119, 337, 1899, 307, 350, 531, 11,
 ]
+
+/** Atalhos para o catálogo com filtros (a query segue a ordem de serializeFilters). */
+export const exploreLinks = {
+  all: '/explorar',
+  releases: '/explorar?sort=primary_release_date.desc',
+  topRated: '/explorar?rating=7&sort=vote_average.desc',
+} as const

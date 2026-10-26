@@ -3,7 +3,7 @@ import Image from 'next/image'
 export function Footer() {
   return (
     <footer className="mt-16 border-t border-white/10">
-      <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-8 text-xs text-muted sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-4 px-gutter py-8 text-xs text-muted sm:flex-row sm:items-center sm:justify-between">
         <a
           href="https://www.themoviedb.org"
           target="_blank"

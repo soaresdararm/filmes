@@ -39,6 +39,7 @@ describe('toMovie', () => {
       id: 1,
       title: 'X',
       posterPath: null,
+      backdropPath: null,
       releaseYear: null,
       rating: null,
     })
@@ -112,6 +113,21 @@ describe('toMovieDetails', () => {
     expect(toMovieDetails(rawDetails({ credits: { cast } })).cast).toHaveLength(
       20,
     )
+  })
+
+  it('recomendações viram filmes; sem recomendações, lista vazia', () => {
+    expect(toMovieDetails(rawDetails()).similar).toEqual([])
+    const similar = toMovieDetails(
+      rawDetails({
+        recommendations: {
+          page: 1,
+          results: [{ ...rawMovie, id: 2, backdrop_path: '/b.jpg' }],
+          total_pages: 1,
+          total_results: 1,
+        },
+      }),
+    ).similar
+    expect(similar).toMatchObject([{ id: 2, backdropPath: '/b.jpg' }])
   })
 
   it('sinopse vazia vira null', () => {

@@ -1,91 +1,94 @@
-import Link from 'next/link'
+import { redirect } from 'next/navigation'
 import { Suspense } from 'react'
+import { DEFAULT_FILTERS, type Filters } from '@/features/catalog-filters'
 import {
-  FiltersForm,
-  parseFilters,
-  serializeFilters,
-  type Filters,
-} from '@/features/catalog-filters'
-import { EmptyState, MovieGrid, MovieGridSkeleton } from '@/features/movies'
-import {
-  discoverMovies,
-  getGenres,
-  getProviders,
-} from '@/features/movies/server'
-import { formatCount } from '@/shared/lib/format'
-import { Button } from '@/shared/ui/button'
-import { Pagination } from '@/shared/ui/pagination'
+  FeaturedHero,
+  HeroSkeleton,
+  MovieRow,
+  MovieRowSkeleton,
+  TopTenRow,
+} from '@/features/movies'
+import { discoverMovies, getMovieDetails } from '@/features/movies/server'
+import { exploreLinks } from '@/shared/config/site'
 
-const catalogHref = (filters: Filters) => {
-  const query = serializeFilters(filters).toString()
-  return query ? `/?${query}` : '/'
+const popular: Filters = DEFAULT_FILTERS
+const releases: Filters = {
+  ...DEFAULT_FILTERS,
+  sort: 'primary_release_date.desc',
+}
+const topRated: Filters = {
+  ...DEFAULT_FILTERS,
+  rating: 7,
+  sort: 'vote_average.desc',
 }
 
-async function CatalogResults({ filters }: { filters: Filters }) {
-  const { results, totalPages, totalResults } = await discoverMovies(filters)
+async function Featured() {
+  const { results } = await discoverMovies(popular)
+  const top = results.find((movie) => movie.backdropPath)
+  if (!top) return null
+  return <FeaturedHero movie={await getMovieDetails(top.id)} />
+}
 
-  const empty =
-    filters.page > 1 ? (
-      <EmptyState
-        title="Página inexistente"
-        description="Essa página não tem resultados para os filtros escolhidos."
-        action={
-          <Button asChild variant="outline">
-            <Link href={catalogHref({ ...filters, page: 1 })}>
-              Voltar para a página 1
-            </Link>
-          </Button>
-        }
-      />
-    ) : (
-      <EmptyState
-        title="Nenhum filme com esses filtros"
-        description="Tente outros streamings, gêneros ou um intervalo de anos maior."
-        action={
-          <Button asChild variant="outline">
-            <Link href="/">Limpar filtros</Link>
-          </Button>
-        }
-      />
-    )
-
+async function PopularRow() {
+  const { results } = await discoverMovies(popular)
   return (
-    <div className="space-y-8">
-      {results.length > 0 && (
-        <p className="text-sm text-muted">{formatCount(totalResults)} filmes</p>
-      )}
-      <MovieGrid movies={results} empty={empty} />
-      <Pagination
-        page={filters.page}
-        totalPages={totalPages}
-        hrefFor={(page) => catalogHref({ ...filters, page })}
-      />
-    </div>
+    <TopTenRow
+      title="Nos streamings hoje"
+      movies={results}
+      href={exploreLinks.all}
+    />
   )
 }
 
-export default async function CatalogPage({ searchParams }: PageProps<'/'>) {
-  const filters = parseFilters(await searchParams)
-  const [providers, genres] = await Promise.all([getProviders(), getGenres()])
+async function ReleasesRow() {
+  const { results } = await discoverMovies(releases)
+  return (
+    <MovieRow
+      title="Lançamentos"
+      movies={results}
+      href={exploreLinks.releases}
+    />
+  )
+}
+
+async function TopRatedRow() {
+  const { results } = await discoverMovies(topRated)
+  return (
+    <TopTenRow
+      variant="tab"
+      title="Mais bem avaliados"
+      movies={results}
+      href={exploreLinks.topRated}
+    />
+  )
+}
+
+export default async function HomePage({ searchParams }: PageProps<'/'>) {
+  // links antigos com filtros (/?providers=8) vão para o catálogo filtrável, que valida os parâmetros
+  const query = new URLSearchParams(
+    Object.entries(await searchParams).flatMap(([key, value]) =>
+      [value ?? []].flat().map((item) => [key, item]),
+    ),
+  ).toString()
+  if (query) redirect(`${exploreLinks.all}?${query}`)
 
   return (
-    <div className="space-y-8">
-      <div className="space-y-2">
-        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
-          Disponível agora
-        </h1>
-        <p className="text-muted">
-          Filmes nos streamings por assinatura do Brasil.
-        </p>
-      </div>
-      <FiltersForm initial={filters} providers={providers} genres={genres} />
-      {/* key força o fallback a cada mudança de filtro */}
-      <Suspense
-        key={serializeFilters(filters).toString()}
-        fallback={<MovieGridSkeleton />}
-      >
-        <CatalogResults filters={filters} />
+    <>
+      <Suspense fallback={<HeroSkeleton />}>
+        <Featured />
       </Suspense>
-    </div>
+      {/* as fileiras sobem por cima do fim do hero */}
+      <div className="relative z-10 space-y-8 sm:-mt-16 sm:space-y-12 lg:-mt-24">
+        <Suspense fallback={<MovieRowSkeleton />}>
+          <PopularRow />
+        </Suspense>
+        <Suspense fallback={<MovieRowSkeleton />}>
+          <ReleasesRow />
+        </Suspense>
+        <Suspense fallback={<MovieRowSkeleton />}>
+          <TopRatedRow />
+        </Suspense>
+      </div>
+    </>
   )
 }

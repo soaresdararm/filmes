@@ -17,6 +17,7 @@ const movie: MovieDetails = {
   cast: [],
   trailerKey: null,
   watch: { link: null, providers: [] },
+  similar: [],
 }
 
 describe('formatRuntime', () => {
@@ -46,7 +47,7 @@ describe('MovieHero', () => {
     expect(screen.getAllByText('Duna')).toHaveLength(1)
   })
 
-  it('sem backdrop nem pôster renderiza placeholders', () => {
+  it('sem backdrop, nota e duração não quebra', () => {
     render(
       <MovieHero
         movie={{
@@ -59,7 +60,7 @@ describe('MovieHero', () => {
       />,
     )
     expect(screen.queryByRole('img')).toBeNull()
-    expect(screen.getByText('Sem pôster')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Duna')
     expect(screen.queryByLabelText(/nota/i)).toBeNull()
   })
 })

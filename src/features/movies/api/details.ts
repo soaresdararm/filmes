@@ -12,7 +12,9 @@ export async function getMovieDetails(id: number): Promise<MovieDetails> {
 
   const raw = await tmdbFetch(`/movie/${id}`, {
     schema: rawMovieDetailsSchema,
-    params: { append_to_response: 'credits,videos,watch/providers' },
+    params: {
+      append_to_response: 'credits,videos,watch/providers,recommendations',
+    },
   })
   const details = toMovieDetails(raw)
   if (details.trailerKey) return details

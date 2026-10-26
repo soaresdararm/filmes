@@ -5,8 +5,15 @@ import type { MovieDetails } from '../types'
 
 export function WhereToWatch({ watch }: { watch: MovieDetails['watch'] }) {
   return (
-    <section aria-labelledby="onde-assistir" className="space-y-3">
-      <h2 id="onde-assistir" className="text-xl font-semibold">
+    <section
+      id="onde-assistir"
+      aria-labelledby="onde-assistir-titulo"
+      className="scroll-mt-28 space-y-4"
+    >
+      <h2
+        id="onde-assistir-titulo"
+        className="text-lg font-bold tracking-tight sm:text-xl lg:text-2xl"
+      >
         Onde assistir
       </h2>
       {watch.providers.length === 0 ? (
@@ -14,22 +21,30 @@ export function WhereToWatch({ watch }: { watch: MovieDetails['watch'] }) {
           Não disponível em streaming por assinatura no Brasil
         </p>
       ) : (
-        <div className="flex flex-wrap items-center gap-4">
-          <ul className="flex flex-wrap gap-3">
+        <>
+          <ul className="flex flex-wrap gap-4">
             {watch.providers.map((provider) => {
               const logo = tmdbImageUrl(provider.logoPath, 'w92')
               return (
-                <li key={provider.id} title={provider.name}>
+                <li key={provider.id} className="w-20 text-center">
                   {logo ? (
                     <Image
                       src={logo}
                       alt={provider.name}
-                      width={48}
-                      height={48}
-                      className="size-12 rounded-xl ring-1 ring-white/10"
+                      width={80}
+                      height={80}
+                      className="size-20 rounded-2xl shadow-lg ring-1 shadow-black/50 ring-white/10"
                     />
                   ) : (
-                    <span className="flex h-12 items-center rounded-xl bg-surface px-3 text-sm">
+                    <span className="flex size-20 items-center justify-center rounded-2xl bg-surface p-2 text-xs font-semibold">
+                      {provider.name}
+                    </span>
+                  )}
+                  {logo && (
+                    <span
+                      aria-hidden
+                      className="mt-2 block text-xs leading-tight text-muted"
+                    >
                       {provider.name}
                     </span>
                   )}
@@ -37,18 +52,21 @@ export function WhereToWatch({ watch }: { watch: MovieDetails['watch'] }) {
               )
             })}
           </ul>
-          {watch.link && (
-            <a
-              href={watch.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 text-sm text-muted underline-offset-4 hover:text-foreground hover:underline"
-            >
-              Ver no JustWatch
-              <ExternalLink aria-hidden className="size-3.5" />
-            </a>
-          )}
-        </div>
+          <p className="text-sm text-muted">
+            Incluído na assinatura.{' '}
+            {watch.link && (
+              <a
+                href={watch.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 rounded-sm text-foreground underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-accent"
+              >
+                Ver no JustWatch
+                <ExternalLink aria-hidden className="size-3.5" />
+              </a>
+            )}
+          </p>
+        </>
       )}
     </section>
   )

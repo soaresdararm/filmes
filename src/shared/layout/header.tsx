@@ -1,26 +1,31 @@
-import { Clapperboard } from 'lucide-react'
 import Link from 'next/link'
-import type { ReactNode } from 'react'
+import { Suspense, type ReactNode } from 'react'
 import { siteConfig } from '@/shared/config/site'
+import { HeaderShell } from './header-shell'
+import { MainNav } from './main-nav'
 import { UserSlot } from './user-slot'
 
 /** `search` é injetado pelo app/layout para que shared/ não dependa de features/. */
 export function Header({ search }: { search: ReactNode }) {
   return (
-    <header className="sticky top-0 z-30 border-b border-white/5 bg-background/80 backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4">
+    <HeaderShell>
+      <div className="flex h-16 items-center gap-8 px-gutter lg:h-[4.5rem]">
         <Link
           href="/"
-          className="flex shrink-0 items-center gap-2 text-lg font-bold tracking-tight"
+          className="shrink-0 rounded-sm font-display text-3xl leading-none tracking-wide text-accent uppercase focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent lg:text-4xl"
         >
-          <Clapperboard aria-hidden className="size-6 text-accent" />
           {siteConfig.name}
         </Link>
-        <div className="flex flex-1 justify-end md:justify-center">
-          {search}
-        </div>
+        {/* MainNav lê a URL para marcar o item ativo */}
+        <Suspense fallback={null}>
+          <MainNav variant="inline" />
+        </Suspense>
+        <div className="flex flex-1 justify-end">{search}</div>
         <UserSlot />
       </div>
-    </header>
+      <Suspense fallback={<div className="h-10 lg:hidden" />}>
+        <MainNav variant="chips" />
+      </Suspense>
+    </HeaderShell>
   )
 }

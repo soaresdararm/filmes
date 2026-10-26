@@ -4,6 +4,7 @@ export const rawMovieSchema = z.object({
   id: z.number(),
   title: z.string(),
   poster_path: z.string().nullish(),
+  backdrop_path: z.string().nullish(),
   release_date: z.string().nullish(),
   vote_average: z.number().nullish(),
   vote_count: z.number().nullish(),
@@ -47,7 +48,6 @@ const rawWatchRegionSchema = z.object({
 export const rawMovieDetailsSchema = rawMovieSchema.extend({
   original_title: z.string(),
   overview: z.string().nullish(),
-  backdrop_path: z.string().nullish(),
   runtime: z.number().nullish(),
   genres: z.array(rawGenreSchema),
   credits: z.object({
@@ -64,6 +64,7 @@ export const rawMovieDetailsSchema = rawMovieSchema.extend({
   'watch/providers': z.object({
     results: z.record(z.string(), rawWatchRegionSchema),
   }),
+  recommendations: rawPageSchema.nullish(),
 })
 
 export type RawMovie = z.input<typeof rawMovieSchema>

@@ -10,14 +10,14 @@ const trailer = {
 }
 
 describe('getMovieDetails', () => {
-  it('pede credits, videos e watch/providers numa chamada', async () => {
+  it('pede credits, videos, watch/providers e recomendações numa chamada', async () => {
     const requests = mockTmdbGet(
       '/movie/1',
       rawDetails({ videos: { results: [trailer] } }),
     )
     const movie = await getMovieDetails(1)
     expect(requests[0].searchParams.get('append_to_response')).toBe(
-      'credits,videos,watch/providers',
+      'credits,videos,watch/providers,recommendations',
     )
     expect(movie).toMatchObject({
       id: 1,

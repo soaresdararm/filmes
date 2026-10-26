@@ -3,9 +3,10 @@ import { notFound } from 'next/navigation'
 import { cache } from 'react'
 import {
   CastList,
+  MovieAbout,
   MovieHero,
+  MovieRow,
   parseMovieId,
-  Trailer,
   WhereToWatch,
 } from '@/features/movies'
 import { getMovieDetails } from '@/features/movies/server'
@@ -44,19 +45,14 @@ export default async function MoviePage({ params }: PageProps<'/movie/[id]'>) {
   const movie = await loadMovie((await params).id)
 
   return (
-    <article className="space-y-10">
+    <article className="space-y-12 sm:space-y-16">
       <MovieHero movie={movie} />
-      <WhereToWatch watch={movie.watch} />
-      <section aria-labelledby="sinopse" className="max-w-3xl space-y-3">
-        <h2 id="sinopse" className="text-xl font-semibold">
-          Sinopse
-        </h2>
-        <p className="leading-relaxed text-foreground/85">
-          {movie.overview ?? 'Sinopse indisponível.'}
-        </p>
-      </section>
-      <Trailer trailerKey={movie.trailerKey} title={movie.title} />
+      <div className="grid gap-10 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:gap-16">
+        <WhereToWatch watch={movie.watch} />
+        <MovieAbout movie={movie} />
+      </div>
       <CastList cast={movie.cast} />
+      <MovieRow title="Títulos semelhantes" movies={movie.similar} />
     </article>
   )
 }

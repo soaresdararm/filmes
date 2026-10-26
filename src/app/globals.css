@@ -2,13 +2,29 @@
 
 /* Tokens do tema. Trocar o tema = trocar estes valores. */
 @theme {
-  --color-background: #0b0b0f;
-  --color-surface: #16161d;
-  --color-muted: #9ca3af;
-  --color-foreground: #f5f5f7;
-  --color-accent: #e11d48;
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: #141414;
+  --color-surface: #1f1f1f;
+  --color-muted: #a3a3a3;
+  --color-foreground: #f5f5f1;
+  --color-accent: #e50914;
+  --font-sans: var(--font-figtree);
+  --font-display: var(--font-bebas);
+  /* margem lateral das páginas; carrosséis e heros sangram até a borda e a repõem por dentro */
+  --spacing-gutter: clamp(1.25rem, 5vw, 4.5rem);
+}
+
+/* Numeral do Top 10: preenchido com o fundo e contornado, como em letreiro de cinema. */
+@utility text-outline {
+  color: var(--color-background);
+  -webkit-text-stroke: 0.035em #5c5c5c;
+  paint-order: stroke fill;
+}
+
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 @layer base {

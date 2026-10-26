@@ -12,11 +12,15 @@ export const buttonVariants = cva(
         outline:
           'rounded-md border border-white/15 bg-transparent hover:bg-white/5',
         ghost: 'rounded-md hover:bg-white/10',
+        light: 'rounded-md bg-white text-black hover:bg-white/75',
+        glass:
+          'rounded-md bg-neutral-500/60 text-white backdrop-blur-sm hover:bg-neutral-500/40',
         chip: 'rounded-full border border-white/15 bg-surface text-muted hover:text-foreground aria-pressed:border-accent aria-pressed:bg-accent/15 aria-pressed:text-foreground',
       },
       size: {
         sm: 'h-8 px-3 text-sm',
         md: 'h-10 px-4 text-sm',
+        lg: 'h-11 px-6 text-base font-semibold sm:h-12 sm:px-7 sm:text-lg',
         icon: 'size-10',
       },
     },

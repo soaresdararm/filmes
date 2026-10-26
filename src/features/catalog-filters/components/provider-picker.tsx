@@ -25,7 +25,7 @@ export function ProviderPicker({
     <div
       role="group"
       aria-label="Streamings"
-      className="-mx-4 flex [scrollbar-width:none] gap-2 overflow-x-auto px-4 pb-2"
+      className="-mx-gutter scrollbar-none flex gap-2 overflow-x-auto px-gutter pb-2"
     >
       {providers.map((provider) => {
         const logo = tmdbImageUrl(provider.logoPath, 'w92')

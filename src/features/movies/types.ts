@@ -2,6 +2,7 @@ export type Movie = {
   id: number
   title: string
   posterPath: string | null
+  backdropPath: string | null
   releaseYear: number | null
   rating: number | null
 }
@@ -20,12 +21,12 @@ export type CastMember = {
 export type MovieDetails = Movie & {
   originalTitle: string
   overview: string | null
-  backdropPath: string | null
   runtime: number | null
   genres: Genre[]
   cast: CastMember[]
   trailerKey: string | null
   watch: { link: string | null; providers: Provider[] }
+  similar: Movie[]
 }
 
 export type Paginated<T> = {

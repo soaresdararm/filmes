@@ -15,6 +15,7 @@ import {
 } from './types'
 
 const MAX_CAST = 20
+const MAX_SIMILAR = 20
 
 export function toMovie(raw: RawMovie): Movie {
   const year = raw.release_date
@@ -24,6 +25,7 @@ export function toMovie(raw: RawMovie): Movie {
     id: raw.id,
     title: raw.title,
     posterPath: raw.poster_path ?? null,
+    backdropPath: raw.backdrop_path ?? null,
     releaseYear: Number.isNaN(year) ? null : year,
     rating: raw.vote_count
       ? Math.round((raw.vote_average ?? 0) * 10) / 10
@@ -62,7 +64,6 @@ export function toMovieDetails(raw: RawMovieDetails): MovieDetails {
     ...toMovie(raw),
     originalTitle: raw.original_title,
     overview: raw.overview || null,
-    backdropPath: raw.backdrop_path ?? null,
     runtime: raw.runtime || null,
     genres: raw.genres,
     cast: raw.credits.cast.slice(0, MAX_CAST).map((member) => ({
@@ -76,5 +77,8 @@ export function toMovieDetails(raw: RawMovieDetails): MovieDetails {
       link: region?.link ?? null,
       providers: (region?.flatrate ?? []).map(toProvider),
     },
+    similar: (raw.recommendations?.results ?? [])
+      .slice(0, MAX_SIMILAR)
+      .map(toMovie),
   }
 }

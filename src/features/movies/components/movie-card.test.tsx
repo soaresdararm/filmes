@@ -7,6 +7,7 @@ const movie: Movie = {
   id: 1,
   title: 'Duna',
   posterPath: '/d.jpg',
+  backdropPath: null,
   releaseYear: 2021,
   rating: 7.5,
 }
